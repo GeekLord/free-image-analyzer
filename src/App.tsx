@@ -69,9 +69,10 @@ export function App() {
     try {
       const result = await analyzeImage(file);
       setNsfwAnalysis(result);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error analyzing image:', error);
-      toast.error('Failed to analyze image content safety. Please check your network or API status.');
+      const message = error instanceof Error ? error.message : 'Failed to analyze image content safety. Please check your API configuration or network connection.';
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }

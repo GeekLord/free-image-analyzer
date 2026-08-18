@@ -10,11 +10,14 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+/assets
 *.local
 
 # Environment variables (keep .env.example tracked)
 .env
 .env.*
+.env.local
+.env.*.local
 !.env.example
 
 # Netlify

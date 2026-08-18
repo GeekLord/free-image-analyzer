@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { NSFWAnalysis, ImageSource } from '../types';
 
-const SIGHTENGINE_USER = import.meta.env.VITE_SIGHTENGINE_USER || '1431485952';
-const SIGHTENGINE_SECRET = import.meta.env.VITE_SIGHTENGINE_SECRET || 'DM2rKp6xwbFuAbP9Ecv6';
+const SIGHTENGINE_USER = import.meta.env.VITE_SIGHTENGINE_USER || '';
+const SIGHTENGINE_SECRET = import.meta.env.VITE_SIGHTENGINE_SECRET || '';
 const GOOGLE_API_KEY = import.meta.env.VITE_GOOGLE_API_KEY || '';
 const GOOGLE_CX = import.meta.env.VITE_GOOGLE_CX || '';
 
@@ -13,6 +13,12 @@ export interface SearchResponse {
 }
 
 export async function analyzeImage(file: File): Promise<NSFWAnalysis> {
+  if (!SIGHTENGINE_USER || !SIGHTENGINE_SECRET) {
+    throw new Error(
+      'SightEngine API credentials are not configured. Set VITE_SIGHTENGINE_USER and VITE_SIGHTENGINE_SECRET in your environment.'
+    );
+  }
+
   const formData = new FormData();
   formData.append('media', file);
   formData.append('models', 'nudity,offensive,gore');

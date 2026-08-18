@@ -1,7 +1,14 @@
 {
-  "name": "image-analyzer",
-  "private": true,
+  "name": "free-image-analyzer",
   "version": "1.0.0",
+  "description": "Client-side image content safety evaluator and reverse image search web app built with React, TypeScript, and Tailwind CSS",
+  "author": "Shobhit Kumar Prabhakar",
+  "license": "MIT",
+  "homepage": "https://free-image-analyzer.netlify.app/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GeekLord/free-image-analyzer.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
