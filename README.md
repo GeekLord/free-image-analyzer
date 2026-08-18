@@ -14,6 +14,12 @@ A client-side web application that evaluates uploaded images for content safety 
 
 All analysis runs directly in the browser with no backend server required.
 
+## Preview
+
+| Light Mode | Dark Mode |
+| :---: | :---: |
+| ![Image Analyzer Light Mode](screenshots/light-mode.png) | ![Image Analyzer Dark Mode](screenshots/dark-mode.png) |
+
 ## Features
 
 - **Content safety scoring**: Evaluates images for nudity, suggestive material, and violence scores using the SightEngine API.
