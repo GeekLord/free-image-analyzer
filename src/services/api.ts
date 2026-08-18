@@ -59,10 +59,14 @@ export async function findImageSources(query: string): Promise<SearchResponse> {
 
   // If no custom Google API key is configured or default key is empty/expired
   if (!GOOGLE_API_KEY || !GOOGLE_CX) {
+    const missing: string[] = [];
+    if (!GOOGLE_API_KEY) missing.push('VITE_GOOGLE_API_KEY');
+    if (!GOOGLE_CX) missing.push('VITE_GOOGLE_CX (Search Engine ID)');
+
     return {
       sources: [],
       isApiKeyMissingOrExpired: true,
-      error: 'Google Custom Search API key is not configured or has expired.',
+      error: `Google Custom Search requires both ${missing.join(' and ')}. Note: after adding variables to Netlify, trigger a new deploy (Clear cache and deploy site) so Vite compiles them into the build.`,
     };
   }
 

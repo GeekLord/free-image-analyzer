@@ -82,30 +82,44 @@ export function AnalysisResults({
   }
 
   // Generate external reverse image search links
+  const queryEncoded = encodeURIComponent(searchQuery || imageDetails?.name?.replace(/\.[^/.]+$/, '') || 'image');
+
   const reverseSearchEngines = [
     {
-      name: 'Google Lens',
-      url: `https://lens.google.com/`,
-      description: 'Search visual matches and similar images across Google',
+      name: 'Google Images Search',
+      url: `https://www.google.com/search?tbm=isch&q=${queryEncoded}`,
+      description: `Search matching and visually similar images for "${searchQuery || 'image'}" on Google`,
       iconColor: 'text-red-500 dark:text-red-400',
     },
     {
-      name: 'Bing Visual Search',
-      url: `https://www.bing.com/visualsearch`,
-      description: 'Find where this image appears and related items on Bing',
+      name: 'Bing Visual & Image Search',
+      url: `https://www.bing.com/images/search?q=${queryEncoded}`,
+      description: `Find matching image sources and duplicates for "${searchQuery || 'image'}" on Bing`,
       iconColor: 'text-blue-500 dark:text-blue-400',
     },
     {
-      name: 'TinEye Reverse Search',
-      url: `https://tineye.com/search`,
-      description: 'Find exact image source occurrences, duplicates & modifications',
-      iconColor: 'text-purple-500 dark:text-purple-400',
+      name: 'Yandex Images Search',
+      url: `https://yandex.com/images/search?text=${queryEncoded}`,
+      description: `Deep visual recognition and matching sources for "${searchQuery || 'image'}"`,
+      iconColor: 'text-amber-500 dark:text-amber-400',
     },
     {
-      name: 'Yandex Images',
-      url: `https://yandex.com/images/`,
-      description: 'Deep visual facial & scenery recognition search',
-      iconColor: 'text-amber-500 dark:text-amber-400',
+      name: 'DuckDuckGo Images',
+      url: `https://duckduckgo.com/?q=${queryEncoded}&iax=images&ia=images`,
+      description: `Direct image results and source web pages on DuckDuckGo`,
+      iconColor: 'text-orange-500 dark:text-orange-400',
+    },
+    {
+      name: 'Google Lens (Upload)',
+      url: 'https://lens.google.com/',
+      description: 'Upload or drag this image directly into Google Lens for neural visual matching',
+      iconColor: 'text-green-500 dark:text-green-400',
+    },
+    {
+      name: 'TinEye Reverse Search',
+      url: imageUrl.startsWith('http') ? `https://tineye.com/search?url=${encodeURIComponent(imageUrl)}` : 'https://tineye.com/',
+      description: 'Find modified versions, higher resolution copies, and earliest occurrences',
+      iconColor: 'text-purple-500 dark:text-purple-400',
     },
   ];
 
@@ -311,9 +325,9 @@ export function AnalysisResults({
               <div className="p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-lg flex items-start gap-2.5 text-xs text-amber-800 dark:text-amber-300">
                 <Info className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-medium">Direct Search Engine Integration Active</p>
-                  <p className="mt-0.5 text-amber-700 dark:text-amber-400">
-                    Use the 1-click <strong>Reverse Image Search Engines</strong> above (Google Lens, Bing, TinEye) for live instant lookups, or add your custom <code className="bg-amber-100 dark:bg-amber-950 px-1 py-0.5 rounded font-mono">VITE_GOOGLE_API_KEY</code> in Netlify settings.
+                  <p className="font-medium">Search Configuration Notice</p>
+                  <p className="mt-0.5 text-amber-700 dark:text-amber-400 leading-relaxed">
+                    {apiNotice}
                   </p>
                 </div>
               </div>
