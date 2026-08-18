@@ -94,15 +94,36 @@ export async function findImageSources(query: string): Promise<SearchResponse> {
 
     return { sources };
   } catch (error: unknown) {
-    const err = error as { response?: { data?: { error?: { message?: string } } }; message?: string };
-    const message = err.response?.data?.error?.message || err.message || 'Error querying search API';
-    const isExpired = message.toLowerCase().includes('expired') || message.toLowerCase().includes('key');
+    const axiosError = error as {
+      response?: {
+        data?: {
+          error?: {
+            message?: string;
+            status?: string;
+          };
+        };
+      };
+      message?: string;
+    };
+
+    const message =
+      axiosError.response?.data?.error?.message ||
+      axiosError.message ||
+      'Error querying Google Custom Search API';
+
+    const isApiKeyIssue =
+      message.toLowerCase().includes('key') ||
+      message.toLowerCase().includes('access') ||
+      message.toLowerCase().includes('disabled') ||
+      message.toLowerCase().includes('not authorized') ||
+      message.toLowerCase().includes('permission_denied') ||
+      message.toLowerCase().includes('accessnotconfigured');
 
     console.warn('Google Custom Search API notice:', message);
     return {
       sources: [],
       error: message,
-      isApiKeyMissingOrExpired: isExpired,
+      isApiKeyMissingOrExpired: isApiKeyIssue,
     };
   }
 }
